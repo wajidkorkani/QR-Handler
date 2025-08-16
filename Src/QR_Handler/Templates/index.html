@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Handler</title>
+    <style>
+        .logo{
+            width:100px;
+            height:100px;
+        }
+        nav{
+            height: 100px;
+            padding: 10px;
+            padding-left: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav div{
+            width: 50%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .navLink{
+            text-decoration: none;
+            font-size: 30px;
+            padding: 10px;
+            background-color: black;
+            color: white;
+            border-radius: 10px;
+        }
+        .container{
+            width: 700px;
+            max-height: 500px;
+            margin: 0 auto;
+            border-radius: 20px;
+        }
+        img{
+            width: 700px;
+            height: 500px;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="">
+            <img class="logo" src="{% static 'images/logo.jpg' %}" alt="Logo">
+        </a>
+        <div>
+            <a class="navLink" href="">Scan</a>
+            <a class="navLink" href="">Generate</a>
+        </div>
+    </nav>
+    <br><br>
+    <div class="container">
+        <img src="{% static 'images/one.jpg' %}" alt="QR code slider image" class="slider">
+    </div>
+    <script>
+        let img = document.querySelector(".slider")
+        let images = ["{% static 'images/one.jpg' %}", "{% static 'images/two.jpg' %}", "{% static 'images/three.jpg' %}", "{% static 'images/four.jpg' %}"]
+        let i = 0
+
+        function Slider(){
+            if(i >= images.length){
+                i = 0
+            }
+            img.src = images[i]
+            i++
+        }
+
+        setInterval(Slider, 1000)
+    </script>
+</body>
+</html>
