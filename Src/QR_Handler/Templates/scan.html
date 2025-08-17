@@ -33,9 +33,10 @@
     </style>
 </head>
 <body>
-    <form action="" method="post">
+    <form action="{% url 'scan_result' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
         <div>
-            <input type="file" placeholder="Upload an image">
+            <input type="file" name="image" placeholder="Upload an image">
             <br><br>
             <button type="submit">Scan</button>
         </div>
