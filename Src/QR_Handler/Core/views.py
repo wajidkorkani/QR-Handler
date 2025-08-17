@@ -16,8 +16,6 @@ def ScanResult(request):
         type = ""
         data = ""
         for i in decoded:
-            print("Type: ", i.type)
-            print("Data: ", i.data.decode("utf-8"))
             type = i.type
             data = i.data.decode("utf-8")
         return render (request, "scaned_code.html", {"type": type, "data": data})
