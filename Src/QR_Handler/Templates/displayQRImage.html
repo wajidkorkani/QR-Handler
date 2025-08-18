@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Handler</title>
+    <style>
+        div {
+            width: 400px;
+            height: 400px;
+            margin: 0 auto;
+        }
+        img {
+            width: 100%;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .btnDiv{
+            width: fit-content;
+            margin: 0 auto;
+        }
+        a{
+            width: fit-content;
+            height: 5px;
+            font-size: 30px;
+            background-color: black;
+            color: white;
+            border-radius: 10px;
+            padding: 10px;
+            text-decoration: none;
+        }
+        a:hover{
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        {% if images %}
+            {% for img in images %}
+            <br><br>
+                <img src="{{ img.image.url }}" alt="QR Code">
+                <br>
+                <div class="btnDiv">
+                    <a href="{{ img.image.url }}" download="{{ img.image.url }}">Download</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No QR codes found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
