@@ -27,8 +27,29 @@
             color: white;
             border-radius: 10px;
         }
-        button:hover{
+        button:hover, .camera:hover{
             background-color: lightgreen;
+        }
+        .inputFields{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .camera{
+            width: 200px;
+            height: 60px;
+            font-size: 30px;
+            background-color: black;
+            color: white;
+            border-radius: 10px;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+        .cameraImg{
+            width: 70px;
         }
     </style>
 </head>
@@ -36,7 +57,13 @@
     <form action="{% url 'scan_result' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div>
-            <input type="file" name="image" placeholder="Upload an image">
+            <div class="inputFields">
+                <input type="file" name="image" placeholder="Upload an image">
+                <a class="camera" href="{% url 'liveScan' %}">
+                    <img class="cameraImg" src="{% static 'images/camera.png' %}" alt="">
+                    Camera
+                </a>
+            </div>
             <br><br>
             <button type="submit">Scan</button>
         </div>
