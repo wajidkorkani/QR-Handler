@@ -5,6 +5,10 @@ import qrcode
 from .models import QRImages
 import io
 from django.core.files.base import ContentFile
+import cv2
+import time
+
+decodeText = ""
 
 def Home(request):
     return render(request, "index.html")
@@ -54,3 +58,48 @@ def DisplayQRImage(request):
         "images": newImage
     }
     return render(request, template, context)
+
+def LiveScan(request):
+    cap = cv2.VideoCapture(0)
+
+    if not cap.isOpened():
+        return render(request, "liveScan.html", {"error": "Camera not available"})
+
+    capturedImage = "image.jpg"
+    startTime = time.time()
+    frame = None
+
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        cv2.imshow("Laptop Camera", frame)
+
+        # Close after 10 seconds
+        if time.time() - startTime >= 10:
+            cv2.imwrite(capturedImage, frame)
+            break
+
+        # Required to keep imshow window responsive
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
+
+    # Make sure an image was captured
+    if frame is None:
+        return render(request, "liveScan.html", {"error": "No frame captured"})
+
+    # Decode QR code
+    image = Image.open(capturedImage)
+    decoded = decode(image)
+
+    type = ""
+    data = ""
+    for i in decoded:
+        type = i.type
+        data = i.data.decode("utf-8")
+
+    return render(request, "liveScan.html", {"type": type, "data": data})
