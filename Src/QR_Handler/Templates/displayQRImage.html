@@ -6,12 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Handler</title>
     <style>
-        div {
+        .logo{
+            width:100px;
+            height:100px;
+            border-radius: 50%;
+            box-shadow: 2px 3px 20px 3px lightgreen;
+        }
+        nav{
+            height: 100px;
+            padding: 10px;
+            padding-left: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav div{
+            width: 50%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .navLink{
+            text-decoration: none;
+            font-size: 30px;
+            padding: 10px;
+            background-color: black;
+            color: white;
+            border-radius: 10px;
+        }
+        .navLink:hover{
+            background-color: lightgreen;
+        }
+        .qrImageDiv {
             width: 400px;
             height: 400px;
             margin: 0 auto;
         }
-        img {
+        .qrImage{
             width: 100%;
             border: 2px solid #ddd;
             border-radius: 10px;
@@ -21,7 +52,7 @@
             width: fit-content;
             margin: 0 auto;
         }
-        a{
+        .download{
             width: fit-content;
             height: 5px;
             font-size: 30px;
@@ -31,20 +62,29 @@
             padding: 10px;
             text-decoration: none;
         }
-        a:hover{
+        .download:hover{
             background-color: lightgreen;
         }
     </style>
 </head>
 <body>
-    <div>
+    <nav>
+        <a href="{% url 'home' %}">
+            <img class="logo" src="{% static 'images/logo.jpg' %}" alt="Logo">
+        </a>
+        <div>
+            <a class="navLink" href="{% url 'scan' %}">Scan</a>
+            <a class="navLink" href="{% url 'generateQRCode' %}">Generate</a>
+        </div>
+    </nav>
+    <div class="qrImageDiv">
         {% if images %}
             {% for img in images %}
             <br><br>
-                <img src="{{ img.image.url }}" alt="QR Code">
+                <img class="qrImage" src="{{ img.image.url }}" alt="QR Code">
                 <br>
                 <div class="btnDiv">
-                    <a href="{{ img.image.url }}" download="{{ img.image.url }}">Download</a>
+                    <a class="download" href="{{ img.image.url }}" download="{{ img.image.url }}">Download</a>
                 </div>
             {% endfor %}
         {% else %}
